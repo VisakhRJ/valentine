@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Will you be my Valentine? 💝</title>
+  <meta name="description" content="A small, simple Valentine page — ask someone to be your Valentine." />
+  <style>
+    :root{
+      --bg:#ffeef6;
+      --card:#ffffff;
+      --accent:#ff5da2;
+      --muted:#555;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,#fff0f7 0%,var(--bg) 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:var(--muted);
+    }
+
+    .card{
+      width:100%;
+      max-width:560px;
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.12);
+      text-align:center;
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size:1.9rem;
+      color:#222;
+      line-height:1.1;
+    }
+    p.lead{
+      margin:0 0 18px;
+      color:var(--muted);
+    }
+
+    .emoji{font-size:3.6rem;margin:10px 0}
+
+    .controls{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    button{
+      appearance:none;
+      border:0;
+      padding:10px 18px;
+      border-radius:999px;
+      font-weight:600;
+      cursor:pointer;
+      background:#f0f0f0;
+      color:#111;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+      transition:transform .12s ease;
+    }
+    button:active{transform:translateY(1px)}
+    button:focus{outline:3px solid rgba(255,93,162,0.22); outline-offset:3px}
+
+    #yes{
+      background:linear-gradient(90deg,#ff7ab3 0%,#ff5da2 100%);
+      color:#fff;
+    }
+    #no{
+      background:linear-gradient(90deg,#d0d0d0 0%,#b8b8b8 100%);
+      color:#111;
+    }
+
+    .response{
+      margin-top:18px;
+      font-weight:700;
+      display:none;
+      color:var(--accent);
+    }
+
+    /* small screens */
+    @media (max-width:420px){
+      .card{padding:18px}
+      h1{font-size:1.4rem}
+      .emoji{font-size:2.8rem}
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="title">
+    <h1 id="title">Will you be my Valentine?</h1>
+    <p class="lead">A tiny, sweet page — click to answer.</p>
+
+    <div class="emoji" aria-hidden="true">💝</div>
+
+    <div class="controls" role="group" aria-label="Answer choices">
+      <button id="yes" type="button">Yes 💕</button>
+      <button id="no" type="button" aria-label="No, thank you">No</button>
+    </div>
+
+    <div id="response" class="response" role="status" aria-live="polite"></div>
+  </main>
+
+  <script>
+    // Simple, accessible behavior
+    const yes = document.getElementById('yes');
+    const no  = document.getElementById('no');
+    const resp = document.getElementById('response');
+
+    yes.addEventListener('click', () => {
+      resp.textContent = "Yay! 🥰 Thank you — you're awesome.";
+      resp.style.display = 'block';
+      // hide buttons to keep it simple
+      yes.disabled = true;
+      no.disabled = true;
+    });
+
+    no.addEventListener('click', () => {
+      resp.textContent = "No worries — have a lovely day ❤️";
+      resp.style.display = 'block';
+      yes.disabled = true;
+      no.disabled = true;
+    });
+
+    // keyboard: allow Enter/Space to act like click
+    [yes,no].forEach(btn => {
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
